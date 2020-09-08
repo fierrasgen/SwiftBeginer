@@ -18,6 +18,15 @@ struct SportCar {
     var windowState: SportWindowState
     var bagState: SportBagState
     
+    init(mark: String, establish: Int, bagLitre: Double, engineState: SportEngineState, windowState: SportWindowState, bagState: SportBagState) {
+        self.mark = mark
+        self.establish = establish
+        self.bagLitre = bagLitre
+        self.engineState = engineState
+        self.windowState = windowState
+        self.bagState = bagState
+    }
+    
     mutating func engineStart () {
         self.engineState = .start
     }
@@ -31,6 +40,8 @@ enum SportWindowState {
 enum SportBagState{
     case full, empty
 }
+
+    
 
 
 let car1 = SportCar(mark: "Land Rover", establish: 2014, bagLitre: 312, engineState: .start, windowState: .open, bagState: .empty)
@@ -64,6 +75,15 @@ struct TrunkCar {
     var engineState: TrunkEngineState
     var windowState: TrunkWindowState
     var bagState: TrunkBagState
+    
+    init(mark: String, establish: Int, bagLitre: Double, engineState: TrunkEngineState, windowState: TrunkWindowState, bagState: TrunkBagState) {
+           self.mark = mark
+           self.establish = establish
+           self.bagLitre = bagLitre
+           self.engineState = engineState
+           self.windowState = windowState
+           self.bagState = bagState
+       }
     
     mutating func windowOpen () {
         self.windowState = .open
