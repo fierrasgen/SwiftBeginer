@@ -1,15 +1,14 @@
 import UIKit
 
 
-// Первая версия, задание не завершено
 
 
 enum CarShopError: Error {
 
-    case invalidSelection                    // нет в ассортименте
-    case outOfStock                          // нет в наличии
-    case insufficientFunds(coinsNeeded: Int) // недостаточно денег, передаем недостаточную сумму
-    case MarriageInProduction // Брак на производстве
+    case invalidSelection
+    case outOfStock
+    case insufficientFunds(coinsNeeded: Int)
+    case MarriageInProduction
 }
 
 
@@ -32,7 +31,7 @@ class CarShop {
     ]
 
 var cashDeposited = 0
-var marriageCar = 0
+var marriageCar = "Брака нет"
 
 func vend(itemNamed name: String) throws -> Mark {
     guard let item = carModel[name] else {
@@ -44,18 +43,34 @@ func vend(itemNamed name: String) throws -> Mark {
     guard item.price <= cashDeposited else {
         throw CarShopError.insufficientFunds(coinsNeeded: item.price - cashDeposited)
     }
-    guard item.marriage <= marriageCar  else {
+    guard item.marriage <= marriageCar else {
         throw CarShopError.MarriageInProduction
     }
+
+   
+    let carShop = CarShop()
+    
+do {
+    let car1 = try carShop.vend(itemNamed: "Lada")
+} catch CarShopError.invalidSelection {
+    print("Такой марки нет в продажи")
+} catch CarShopError.insufficientFunds(let cashNeeded) {
+    print("Введенная сумма недостаточна. Введите оставшуюся сумму \(cashNeeded) ")
+} catch CarShopError.outOfStock{
+    print("Автомобиля нет в наличии")
+} catch CarShopError.MarriageInProduction{
+    print ("Автомобиль бракованный, обратитесь для замены")
+} catch let error {
+    print(error.localizedDescription)
+}
     cashDeposited -= item.price
     var newItem = item
     newItem.count -= 1
     carModel[name] = newItem
     return newItem.mark
+
 }
 }
-
-
 
 
 
